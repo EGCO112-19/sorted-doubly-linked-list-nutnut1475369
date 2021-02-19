@@ -55,8 +55,10 @@ void insert( LLPtr *sPtr, int value )
          previousPtr->nextPtr = newPtr;
          newPtr->nextPtr = currentPtr;
          newPtr->prevPtr = previousPtr;
-
       } // end else
+      if(currentPtr != NULL){
+        currentPtr->prevPtr=newPtr;
+      }
    } // end if
    else {
       printf( "%d not inserted. No memory available.\n", value );
@@ -94,6 +96,7 @@ int deletes( LLPtr *sPtr, int value )
       if ( currentPtr != NULL ) { 
          tempPtr = currentPtr;
          previousPtr->nextPtr = currentPtr->nextPtr;
+         currentPtr->nextPtr->prevPtr = previousPtr;
          free( tempPtr );
          return value;
       } // end if
@@ -122,7 +125,6 @@ void printList( LLPtr currentPtr )
       // while not the end of the list
       while ( currentPtr != NULL ) { 
          printf( "%d --> ", currentPtr->data );
-
          currentPtr = currentPtr->nextPtr;
       } // end while
       puts( "NULL\n" );
